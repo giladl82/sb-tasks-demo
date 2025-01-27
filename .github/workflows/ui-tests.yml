@@ -1,50 +1,43 @@
-name: 'UI Tests'
+name: CI Pipeline
 
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  # Run interaction and accessibility tests
-  interaction-and-accessibility:
+  ci:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm' # Use npm cache for faster builds
-      - name: Install dependencies
-        run: npm install
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-      - name: Build Storybook
-        run: npm run build-storybook --quiet
-      - name: Serve Storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && npm run test-storybook"
 
-  # Run visual and composition tests with Chromatic
-  visual-and-composition:
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Required to retrieve Git history
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment with the highest LTS version
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 'lts/*' # Use the highest available LTS version
+          cache: 'pnpm'
+
+      # Step 3: Install pnpm
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+
+      # Step 4: Install dependencies
       - name: Install dependencies
-        run: npm install
-      - name: Publish to Chromatic
-        uses: chromaui/action@latest
-        with:
-          # Grab this from the Chromatic manage page
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        run: pnpm install
+
+      # Step 5: Run tests
+      - name: Run tests
+        run: pnpm test-storybook
+
+      # Step 6: Run Chromatic
+      - name: Run Chromatic
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }} # Set this secret in your repository settings
+        run: |
+          pnpm dlx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
