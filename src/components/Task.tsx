@@ -1,10 +1,7 @@
 import classNames from 'classnames';
+import type { Task as TaskType } from '@models/task';
 
-type TaskProps = {
-  id: string;
-  title: string;
-  isCompleted?: boolean;
-  isImportant?: boolean;
+export type TaskProps = TaskType & {
   onToggleCompletion: (id: string) => Promise<void>;
   onToggleImportant: (id: string) => Promise<void>;
 };
@@ -33,7 +30,7 @@ export function Task(props: TaskProps) {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-
+    console.log('li');
     await onToggleCompletion(id);
   };
 
@@ -48,9 +45,23 @@ export function Task(props: TaskProps) {
 
   return (
     <li onClick={handleItemClick} className={itemClassName}>
-      <input data-testid="toggle-completion" aria-label='toggle task completion' type="checkbox" checked={isCompleted} />{' '}
-      <span data-testid="title" className={titleClassName}>{title}</span>
-      <button data-testid="toggle-important" className="ml-auto" onClick={handleToggleImportant}>
+      <input
+        onChange={() => {
+          /* Change is handle on the li click */
+        }}
+        data-testid="toggle-completion"
+        aria-label="toggle task completion"
+        type="checkbox"
+        checked={isCompleted}
+      />{' '}
+      <span data-testid="title" className={titleClassName}>
+        {title}
+      </span>
+      <button
+        data-testid="toggle-important"
+        className="ml-auto"
+        onClick={handleToggleImportant}
+      >
         {isImportant ? '😎' : '🫥'}
       </button>
     </li>

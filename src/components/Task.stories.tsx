@@ -10,6 +10,10 @@ const meta: Meta<typeof Task> = {
       </ul>
     ),
   ],
+  argTypes: {
+    onToggleCompletion: { action: 'onToggleCompletion' },
+    onToggleImportant: { action: 'onToggleImportant' },
+  },
 };
 
 export default meta;
@@ -26,7 +30,7 @@ export const Default: Story = {
 export const Completed: Story = {
   args: {
     ...Default.args,
-    isCompleted: false,
+    isCompleted: true,
   },
 };
 
