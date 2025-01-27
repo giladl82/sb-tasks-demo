@@ -22,11 +22,11 @@ jobs:
           node-version: 'lts/*' # Use the highest available LTS version
           cache: 'pnpm'
 
-      # Step 3: Install pnpm
+      # Step 3: Install pnpm explicitly
       - name: Install pnpm
         run: |
-          corepack enable # Ensures pnpm is installed with Node.js
-          pnpm --version # Verifies pnpm is installed and available in PATH
+          npm install -g pnpm # Explicitly install pnpm globally
+          echo "PNPM version: $(pnpm --version)" # Verify pnpm installation
 
       # Step 4: Install dependencies
       - name: Install dependencies
@@ -40,5 +40,4 @@ jobs:
       - name: Run Chromatic
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }} # Set this secret in your repository settings
-        run: |
-          pnpm dlx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        run: pnpm dlx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
