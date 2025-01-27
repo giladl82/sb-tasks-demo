@@ -7,32 +7,46 @@ jobs:
   interaction-and-accessibility:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'pnpm' # Use pnpm cache for faster builds
+      - name: Enable and setup pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm install
       - name: Install Playwright
-        run: npx playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
       - name: Build Storybook
         run: pnpm build-storybook --quiet
       - name: Serve Storybook and run tests
         run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && pnpm test-storybook"
+          pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm exec http-server storybook-static --port 6006 --silent" \
+            "pnpm exec wait-on tcp:6006 && pnpm test-storybook"
+
   # Run visual and composition tests with Chromatic
   visual-and-composition:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Required to retrieve Git history
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Enable and setup pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
       - name: Install dependencies
-        run: pnpm i 
+        run: pnpm install
       - name: Publish to Chromatic
         uses: chromaui/action@latest
         with:
