@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import type { Task as TaskType } from '@models/task';
 
 export type TaskProps = TaskType & {
-  onToggleCompletion: (id: string) => Promise<void>;
-  onToggleImportant: (id: string) => Promise<void>;
+  onToggleCompletion: (task: TaskType) => Promise<void>;
+  onToggleImportant: (task: TaskType) => Promise<void>;
 };
 
 export function Task(props: TaskProps) {
@@ -30,8 +30,12 @@ export function Task(props: TaskProps) {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('li');
-    await onToggleCompletion(id);
+    await onToggleCompletion({
+      id,
+      title,
+      isCompleted: !isCompleted,
+      isImportant,
+    });
   };
 
   const handleToggleImportant = async (
@@ -40,7 +44,12 @@ export function Task(props: TaskProps) {
     e.preventDefault();
     e.stopPropagation();
 
-    await onToggleImportant(id);
+    await onToggleImportant({
+      id,
+      title,
+      isCompleted,
+      isImportant: !isImportant,
+    });
   };
 
   return (

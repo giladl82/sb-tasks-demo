@@ -1,17 +1,14 @@
-import { useEffect } from "react";
+import { Tasks } from './pages/Tasks';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
-  useEffect(() => {
-    const test = async () => {
-      const response = await fetch('http://localhost:3000/tasks')
-      const data = await response.json();
-      console.log(data);
-    }
-
-    test();
-  }, [])
-
-  return <h1 className="p-4 text-3xl text-blue-600">This is a title</h1>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Tasks />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

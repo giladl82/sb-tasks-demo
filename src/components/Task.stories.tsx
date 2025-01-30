@@ -3,6 +3,7 @@ import { Task } from './Task';
 
 const meta: Meta<typeof Task> = {
   component: Task,
+  title: 'Components/Tasks/Task',
   decorators: [
     (Story) => (
       <ul>

@@ -3,6 +3,7 @@ import { TaskList } from './TaskList';
 import * as TaskStories from './Task.stories';
 const meta: Meta<typeof TaskList> = {
   component: TaskList,
+  title: 'Components/Tasks/TaskList',
   argTypes: {
     onTaskToggleCompletion: { action: 'onTaskToggleCompletion' },
     onTaskToggleImportant: { action: 'onTaskToggleImportant' },
@@ -43,5 +44,11 @@ export const WithCompleted = {
       { id: '2', title: 'Task #2', isCompleted: true },
       ...(Default.args?.tasks?.slice(2, 10) ?? []),
     ],
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    tasks: [],
   },
 };
