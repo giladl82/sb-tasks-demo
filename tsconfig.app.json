@@ -23,8 +23,11 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": "./",
     "paths": {
+      "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
-      "@models/*": ["src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@services/*": ["src/services/*"]
     }
   },
   "include": ["src"]
