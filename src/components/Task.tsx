@@ -53,7 +53,7 @@ export function Task(props: TaskProps) {
   };
 
   return (
-    <li onClick={handleItemClick} className={itemClassName}>
+    <li data-testid="task" onClick={handleItemClick} className={itemClassName}>
       <input
         onChange={() => {
           /* Change is handle on the li click */
