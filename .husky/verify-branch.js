@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { execSync } from 'child_process';
 
 // Define allowed branch name patterns (customize this to your needs)
-const allowedBranchPattern = /^(main|develop|feature\/.+|bug\/.+)$/;
+const allowedBranchPattern = /^(main|develop|feat\/.+|bug\/.+)$/;
 
 // Get the current branch name using Git
 let branchName;
@@ -23,7 +23,7 @@ if (!allowedBranchPattern.test(branchName)) {
     chalk.bold.green('Valid branch name formats are:') +
     `\n- ${chalk.cyan('main')}` +
     `\n- ${chalk.cyan('develop')}` +
-    `\n- ${chalk.cyan('feature/<your-feature>')}` +
+    `\n- ${chalk.cyan('feat/<your-feature>')}` +
     `\n- ${chalk.cyan('bug/<your-bugfix>')}\n`
   );
   console.error(
