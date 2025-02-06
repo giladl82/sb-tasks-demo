@@ -59,7 +59,7 @@ export const Loading: Story = {
     msw: {
       handlers: [
         http.get('http://localhost:3000/tasks', async () => {
-          await delay(1000);
+          await delay('infinite')
           return HttpResponse.json([
             {
               id: '1',
