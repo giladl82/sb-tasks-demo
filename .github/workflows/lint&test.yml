@@ -20,7 +20,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
-          key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
