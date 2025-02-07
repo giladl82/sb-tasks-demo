@@ -17,16 +17,21 @@ jobs:
           version: 10
       - name: Cache pnpm dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
-      - name: Install Playwright Browsers
-        run: pnpm dlx playwright install --with-deps
       - name: Run lint
         run: pnpm run lint
-      - name: Run tests
-        run: pnpm test-storybook
+      - name: Install Playwright Browsers
+        run: pnpm dlx playwright install --with-deps
+      - name: Build Storybook
+        run: pnpm build-storybook --quiet
+      - name: Serve Storybook and Run tests
+        run: |
+          pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+          "npx http-server storybook-static --port 6006 --silent" \
+          "pnpm dlx wait-on tcp:127.0.0.1:6006 && pnpm test-storybook"
