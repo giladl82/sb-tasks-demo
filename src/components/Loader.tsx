@@ -1,5 +1,5 @@
-import Lottie from 'lottie-react';
 import loader from '@assets/loader.json';
+import Lottie from 'lottie-react';
 
 export function Loader() {
   return (

@@ -1,6 +1,7 @@
-import { Tasks } from './pages/Tasks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import { Tasks } from './pages/Tasks';
 
 const queryClient = new QueryClient();
 
