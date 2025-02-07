@@ -1,5 +1,6 @@
-import chalk from 'chalk';
 import { execSync } from 'child_process';
+
+import chalk from 'chalk';
 
 // Define allowed branch name patterns (customize this to your needs)
 const allowedBranchPattern = /^(main|develop|feat\/.+|bug\/.+|chore\/.+)$/;

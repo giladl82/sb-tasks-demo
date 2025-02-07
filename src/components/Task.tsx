@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import type { Task as TaskType } from '@models/task';
+import classNames from 'classnames';
 
 export type TaskProps = TaskType & {
   onToggleCompletion: (task: TaskType) => Promise<void>;
