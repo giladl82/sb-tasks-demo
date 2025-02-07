@@ -24,6 +24,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
+      - name: Install Playwright Browsers
+        run: pnpm dlx playwright install --with-deps
       - name: Run lint
         run: pnpm run lint
       - name: Run tests
