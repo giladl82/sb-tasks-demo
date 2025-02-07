@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: pnpm ci
+        run: pnpm install
       - name: Run lint
         run: pnpm run lint
       - name: Run tests
