@@ -1,9 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Loader } from './Loader';
 
 const meta: Meta<typeof Loader> = {
   component: Loader,
   title: 'Components/Helpers/Loader',
+  parameters: {
+    chromatic: { pauseAnimationAtEnd: false },
+  },
 };
 
 export default meta;

@@ -1,8 +1,8 @@
-import { TaskList } from '@components/TaskList';
-import { useGetAllTasks, useUpdateTask } from '@services/queries';
-import { Loader } from '@components/Loader';
 import { Error } from '@components/Error';
+import { Loader } from '@components/Loader';
+import { TaskList } from '@components/TaskList';
 import { Task } from '@models/task';
+import { useGetAllTasks, useUpdateTask } from '@services/queries';
 
 export function Tasks() {
   const { data: tasks, isLoading, isError, error } = useGetAllTasks();
